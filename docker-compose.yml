@@ -1,0 +1,43 @@
+version: '3.1'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  postgresql:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: mainApp
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+  mongodb:
+    image: mongo # Выберите нужную версию MongoDB (например, mongo:4.4)
+    container_name: mongodb  # Наименование контейнера (по вашему выбору)
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=statapp
+      - MONGO_INITDB_USERNAME=user
+      - MONGO_INITDB_PASSWORD=pass
+      - MONGO_AUTHENTICATION_DATABASE=admin
+      - MONGO_SSL=true
+      - MONGO_SSL_CA_FILE=/ca.crt
+      - MONGO_SSL_PEM_KEYFILE=/client.pem
+      - MONGO_SSL_PEM_KEYFILE_PASSWORD=pass
+    volumes:
+      - ./data/db:/data/db
+      - ./ca.crt:/ca.crt
+      - ./client.pem:/client.pem
+    command: --tlsAllowInvalidCertificates
