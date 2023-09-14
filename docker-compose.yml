@@ -23,21 +23,11 @@ services:
     ports:
       - "5432:5432"
   mongodb:
-    image: mongo # Выберите нужную версию MongoDB (например, mongo:4.4)
-    container_name: mongodb  # Наименование контейнера (по вашему выбору)
+    image: mongo
+    container_name: mongodb
     ports:
       - "27017:27017"
-    environment:
-      - MONGO_INITDB_DATABASE=statapp
-      - MONGO_INITDB_USERNAME=user
-      - MONGO_INITDB_PASSWORD=pass
-      - MONGO_AUTHENTICATION_DATABASE=admin
-      - MONGO_SSL=true
-      - MONGO_SSL_CA_FILE=/ca.crt
-      - MONGO_SSL_PEM_KEYFILE=/client.pem
-      - MONGO_SSL_PEM_KEYFILE_PASSWORD=pass
     volumes:
       - ./data/db:/data/db
-      - ./ca.crt:/ca.crt
-      - ./client.pem:/client.pem
-    command: --tlsAllowInvalidCertificates
+    environment:
+      - MONGO_INITDB_DATABASE=statApp
