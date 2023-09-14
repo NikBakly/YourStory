@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/stories")
+@RequestMapping("/api/stories")
 public class StoryController {
     private final StoryService storyService;
 
