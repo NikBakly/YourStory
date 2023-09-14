@@ -14,9 +14,6 @@ public class UserStatController {
 
     @PostMapping
     public void createUserStat(@RequestBody UserStatDto userStatDto) {
-        if (userStatDto.getActionTime() == null) {
-            userStatDto.setActionTime(Instant.now());
-        }
         userStatService.createUserStat(userStatDto);
     }
 
