@@ -5,7 +5,5 @@ spring:
       host: localhost
       database: statApp
       authentication-database: admin
-      username: user
-      password: password
 server:
   port: 9090
