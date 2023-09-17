@@ -1,6 +1,7 @@
 package com.example.mainapp.user;
 
 import com.example.mainapp.exception.NotFoundException;
+import com.example.mainapp.producer.Producer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,13 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final Producer producer;
 
     @Transactional
-    public UserDto createUser(UserDtoWithoutStory newUser) {
+    public UserDto createUser(UserDto newUser) {
         User user = userRepository.save(UserMapper.toUser(newUser));
         log.info("Пользователь с id={} успешно создан", user.getId());
+        producer.sendMessage(UserMapper.toUserStatDto(user, UserActionType.CREATED));
         return UserMapper.toUserDto(user);
     }
 
@@ -38,7 +41,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto updateUser(UserDtoWithoutStory updatedUserDto) {
+    public UserDto updateUser(UserDto updatedUserDto) {
         User oldUser = checkAndGetUserById(updatedUserDto.getId());
         if (!oldUser.getLogin().equals(updatedUserDto.getLogin())) {
             oldUser.setLogin(updatedUserDto.getLogin());
@@ -48,6 +51,7 @@ public class UserService {
         }
         userRepository.save(oldUser);
         log.info("Пользователь с id={} успешно обновлен", oldUser.getId());
+        producer.sendMessage(UserMapper.toUserStatDto(oldUser, UserActionType.UPDATED));
         return UserMapper.toUserDto(oldUser);
     }
 
@@ -56,6 +60,7 @@ public class UserService {
         User foundUser = checkAndGetUserById(userId);
         userRepository.delete(foundUser);
         log.info("Пользователь с id={} успешно удален", userId);
+        producer.sendMessage(UserMapper.toUserStatDto(foundUser, UserActionType.DELETED));
     }
 
     private User checkAndGetUserById(Long userId) {

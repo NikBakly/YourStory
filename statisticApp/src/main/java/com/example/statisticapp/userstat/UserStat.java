@@ -1,6 +1,5 @@
-package com.example.statisticapp.userStat;
+package com.example.statisticapp.userstat;
 
-import com.example.statisticapp.ActionType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,8 @@ import java.time.Instant;
 @Document(collection = "user_stat")
 public class UserStat {
     private String id;
+    private Long oldUserId;
     private String login;
-    private ActionType actionType;
+    private UserActionType userActionType;
     private Instant actionTime;
 }

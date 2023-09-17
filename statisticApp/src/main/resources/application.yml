@@ -4,6 +4,11 @@ spring:
       port: 27017
       host: localhost
       database: statApp
-      authentication-database: admin
+  kafka:
+    consumer:
+      group-id: "default"
 server:
   port: 9090
+
+topic:
+  name: t.user.statistic
