@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface UserStatRepository extends MongoRepository<UserStat, String> {
 
-    List<UserStat> findAllByLoginOrderByActionTimeDesc(String login);
+    List<UserStat> findAllByOldUserIdOrderByActionTimeDesc(Long oldUserId);
 
     List<UserStat> findAllByOrderByActionTimeDesc();
 }

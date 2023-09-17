@@ -1,13 +1,10 @@
 package com.example.mainapp.user;
 
-import com.example.mainapp.story.Story;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -27,6 +24,4 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "owner")
-    private List<Story> stories;
 }

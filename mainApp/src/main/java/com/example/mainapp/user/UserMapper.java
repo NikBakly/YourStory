@@ -1,53 +1,51 @@
 package com.example.mainapp.user;
 
-import com.example.mainapp.story.StoryMapper;
-
-import java.util.ArrayList;
+import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public final class UserMapper {
     private UserMapper() {
     }
 
     public static UserDto toUserDto(User user) {
-        return UserDto.builder()
-                .id(user.getId())
-                .login(user.getLogin())
-                .password(user.getPassword())
-                .stories(StoryMapper.toStoriesDtoWithoutOwner(user.getStories()))
-                .build();
-    }
+        return Optional.ofNullable(user)
+                .map(entity -> UserDto.builder()
+                        .id(entity.getId())
+                        .login(entity.getLogin())
+                        .password(entity.getPassword())
+                        .build())
+                .orElse(null);
 
-    public static UserDtoWithoutStory toUserDtoWithoutStory(User user) {
-        return UserDtoWithoutStory.builder()
-                .id(user.getId())
-                .login(user.getLogin())
-                .password(user.getPassword())
-                .build();
     }
-
 
     public static User toUser(UserDto userDto) {
-        return new User(
-                userDto.getId(),
-                userDto.getLogin(),
-                userDto.getPassword(),
-                StoryMapper.toStoriesFromDtoWithoutOwner(userDto.getStories())
-        );
+        return Optional.ofNullable(userDto)
+                .map(dto -> new User(
+                        dto.getId(),
+                        dto.getLogin(),
+                        dto.getPassword()))
+                .orElse(null);
+
     }
 
-    public static User toUser(UserDtoWithoutStory userDtoWithoutStory) {
-        return new User(
-                userDtoWithoutStory.getId(),
-                userDtoWithoutStory.getLogin(),
-                userDtoWithoutStory.getPassword(),
-                null
-        );
+    public static List<UserDto> toUserDtoList(List<User> users) {
+        return Optional.ofNullable(users)
+                .map(list -> list.stream()
+                        .map(UserMapper::toUserDto)
+                        .collect(Collectors.toList()))
+                .orElse(null);
     }
 
-    public static List<UserDto> toUserDtoList(Iterable<User> users) {
-        List<UserDto> result = new ArrayList<>();
-        users.forEach(user -> result.add(toUserDto(user)));
-        return result;
+    public static UserStatDto toUserStatDto(User user, UserActionType userActionType) {
+        return Optional.ofNullable(user)
+                .map(dtoStat -> UserStatDto.builder()
+                        .userId(user.getId())
+                        .login(user.getLogin())
+                        .actionTime(Instant.now())
+                        .userActionType(userActionType)
+                        .build())
+                .orElse(null);
     }
 }

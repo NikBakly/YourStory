@@ -14,7 +14,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto createUser(@RequestBody UserDtoWithoutStory newUserDto) {
+    public UserDto createUser(@RequestBody UserDto newUserDto) {
         return userService.createUser(newUserDto);
     }
 
@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PatchMapping
-    public UserDto updateUser(@RequestBody UserDtoWithoutStory updatedUserDto) {
+    public UserDto updateUser(@RequestBody UserDto updatedUserDto) {
         return userService.updateUser(updatedUserDto);
     }
 

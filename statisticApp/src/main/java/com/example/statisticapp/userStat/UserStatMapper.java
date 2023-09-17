@@ -1,7 +1,8 @@
 package com.example.statisticapp.userStat;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public final class UserStatMapper {
     private UserStatMapper() {
@@ -13,27 +14,29 @@ public final class UserStatMapper {
         }
         UserStat resultUserStat = new UserStat();
         resultUserStat.setLogin(userStatDto.getLogin());
-        resultUserStat.setActionType(userStatDto.getActionType());
+        resultUserStat.setOldUserId(userStatDto.getUserId());
+        resultUserStat.setUserActionType(userStatDto.getUserActionType());
         resultUserStat.setActionTime(userStatDto.getActionTime());
         return resultUserStat;
     }
 
     public static UserStatDto toUserStatDto(UserStat userStat) {
-        if (userStat == null) {
-            return null;
-        }
-        return new UserStatDto(userStat.getLogin(),
-                userStat.getActionType(),
-                userStat.getActionTime());
+        return Optional.ofNullable(userStat)
+                .map(entity -> UserStatDto.builder()
+                        .userId(entity.getOldUserId())
+                        .login(entity.getLogin())
+                        .actionTime(entity.getActionTime())
+                        .userActionType(entity.getUserActionType())
+                        .build())
+                .orElse(null);
     }
 
     public static List<UserStatDto> toUsersStatDto(List<UserStat> userStats) {
-        if (userStats == null) {
-            return null;
-        }
-        List<UserStatDto> result = new ArrayList<>();
-        userStats.forEach(userStat -> result.add(toUserStatDto(userStat)));
-        return result;
+        return Optional.ofNullable(userStats)
+                .map(list -> list.stream()
+                        .map(UserStatMapper::toUserStatDto)
+                        .collect(Collectors.toList()))
+                .orElse(null);
     }
 
 }

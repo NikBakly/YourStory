@@ -1,4 +1,4 @@
-package com.example.statisticapp.userStat;
+package com.example.mainapp.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -10,8 +10,8 @@ import java.time.Instant;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserStatDto {
 
     private Long userId;

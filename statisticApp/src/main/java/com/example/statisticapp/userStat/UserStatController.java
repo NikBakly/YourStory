@@ -1,9 +1,11 @@
 package com.example.statisticapp.userStat;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -12,14 +14,9 @@ import java.util.List;
 public class UserStatController {
     private final UserStatService userStatService;
 
-    @PostMapping
-    public void createUserStat(@RequestBody UserStatDto userStatDto) {
-        userStatService.createUserStat(userStatDto);
-    }
-
-    @GetMapping("/{userLogin}")
-    public List<UserStatDto> findUsersStatByLogin(@PathVariable String userLogin) {
-        return userStatService.findUsersStatByLogin(userLogin);
+    @GetMapping("/{oldUserId}")
+    public List<UserStatDto> findUsersStatByLogin(@PathVariable Long oldUserId) {
+        return userStatService.findUsersStatByLogin(oldUserId);
     }
 
     @GetMapping

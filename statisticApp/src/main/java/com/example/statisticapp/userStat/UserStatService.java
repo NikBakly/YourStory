@@ -1,7 +1,7 @@
 package com.example.statisticapp.userStat;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,12 +22,12 @@ public class UserStatService {
         log.info("Статистика пользователя с id={} успешно добавлена", userStat.getId());
     }
 
-    public List<UserStatDto> findUsersStatByLogin(@NotBlank(message = "Поле login не должно быть пустым")
-                                                  String login) {
+    public List<UserStatDto> findUsersStatByLogin(@NotNull(message = "Поле login не должно быть пустым")
+                                                  Long oldUserId) {
         List<UserStat> foundUserStat = userStatRepository
-                .findAllByLoginOrderByActionTimeDesc(login);
+                .findAllByOldUserIdOrderByActionTimeDesc(oldUserId);
         List<UserStatDto> foundUsersStatDto = UserStatMapper.toUsersStatDto(foundUserStat);
-        log.info("Статистика пользователя с login={} успешно найдена", login);
+        log.info("Статистика пользователя с id={} успешно найдена", oldUserId);
         return foundUsersStatDto;
     }
 
