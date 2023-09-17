@@ -16,7 +16,17 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> handleNotFound(final NotFoundException e) {
         return Map.of(
-                "Error", "Not found",
+                "Error", HttpStatus.NOT_FOUND.getReasonPhrase(),
+                "errorMessage", e.getMessage(),
+                "timestamp", new SimpleDateFormat("HH:mm:ss").format(new Date())
+        );
+    }
+
+    @ExceptionHandler(InternalServerErrorException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, String> handleInternalServerError(final InternalServerErrorException e) {
+        return Map.of(
+                "Error", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
                 "errorMessage", e.getMessage(),
                 "timestamp", new SimpleDateFormat("HH:mm:ss").format(new Date())
         );
