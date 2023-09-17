@@ -1,4 +1,4 @@
-package com.example.statisticapp.userStat;
+package com.example.statisticapp.userstat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

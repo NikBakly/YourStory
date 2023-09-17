@@ -1,4 +1,4 @@
-package com.example.statisticapp.userStat;
+package com.example.statisticapp.userstat;
 
 import java.util.List;
 import java.util.Optional;

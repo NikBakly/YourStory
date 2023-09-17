@@ -1,4 +1,4 @@
-package com.example.statisticapp.userStat;
+package com.example.statisticapp.userstat;
 
 public enum UserActionType {
     CREATED,

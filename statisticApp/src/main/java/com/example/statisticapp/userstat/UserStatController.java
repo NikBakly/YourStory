@@ -1,4 +1,4 @@
-package com.example.statisticapp.userStat;
+package com.example.statisticapp.userstat;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

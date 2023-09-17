@@ -1,4 +1,4 @@
-package com.example.statisticapp.userStat;
+package com.example.statisticapp.userstat;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
