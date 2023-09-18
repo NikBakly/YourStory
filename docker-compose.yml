@@ -46,7 +46,7 @@ services:
     depends_on:
       - "kafka"
 
-  postgresql:
+  postgredb:
     image: postgres:13.3
     environment:
       POSTGRES_DB: mainApp
