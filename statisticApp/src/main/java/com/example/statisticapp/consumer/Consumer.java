@@ -1,7 +1,7 @@
 package com.example.statisticapp.consumer;
 
-import com.example.statisticapp.userstat.UserStatDto;
-import com.example.statisticapp.userstat.UserStatService;
+import com.example.statisticapp.user.UserStatDto;
+import com.example.statisticapp.user.UserStatService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
