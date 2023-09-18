@@ -1,4 +1,4 @@
-package com.example.statisticapp.userstat;
+package com.example.statisticapp.user;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,8 @@
 package com.example.mainapp.producer;
 
-import lombok.AllArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +14,16 @@ import org.springframework.kafka.core.ProducerFactory;
 import java.util.Map;
 
 @Configuration
-@AllArgsConstructor
-public class ConfigKafka {
+public class KafkaProducerConfig {
+    @Value("${topic.name}")
+    private String topicName;
 
     private final KafkaProperties kafkaProperties;
+
+    @Autowired
+    public KafkaProducerConfig(KafkaProperties kafkaProperties) {
+        this.kafkaProperties = kafkaProperties;
+    }
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
@@ -32,7 +39,7 @@ public class ConfigKafka {
     @Bean
     public NewTopic topic() {
         return TopicBuilder
-                .name("t.user.statistic")
+                .name(topicName)
                 .partitions(1)
                 .replicas(1)
                 .build();
