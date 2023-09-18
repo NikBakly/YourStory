@@ -16,7 +16,7 @@ jobs:
 
     - name: Build Docker Containers
       run: |
-        docker-compose -f ~/docker-compose.yml up -d --build
+        docker-compose -f $GITHUB_WORKSPACE/docker-compose.yml up -d --build
 
     - name: Sleep for 40 seconds
       run: sleep 40
