@@ -2,8 +2,9 @@ name: Build and Deploy
 
 on:
   push:
-    branches:
-      - master  # Ваша ветка, на которой запускаются события
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build-and-deploy:
