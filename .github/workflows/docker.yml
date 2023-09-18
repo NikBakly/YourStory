@@ -1,0 +1,27 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - master  # Ваша ветка, на которой запускаются события
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2  # Шаг для проверки репозитория из GitHub
+
+    - name: Build Docker Containers
+      run: |
+        docker-compose -f ./docker-compose-file.yml up -d --build
+
+    - name: Sleep for 40 seconds
+      run: sleep 40
+
+    - name: Run Checkstyle
+      run: mvn checkstyle:check
+
+    - name: Build Maven Project (Without Checkstyle)
+      run: mvn clean package -Dmaven.checkstyle.skip=true
