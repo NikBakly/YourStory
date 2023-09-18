@@ -22,7 +22,7 @@ jobs:
       run: sleep 40
 
     - name: Run Checkstyle
-      run: mvn checkstyle:check
+      run: mvn validate
 
     - name: Build Maven Project (Without Checkstyle)
       run: mvn clean package -Dmaven.checkstyle.skip=true
